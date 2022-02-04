@@ -412,12 +412,11 @@ nvh264_gst_alpha_encoder_create(struct encoder *encoder) {
 			"glupload ! "
 			"glcolorconvert ! "
 			"glshader name=glshader ! "
-			"glcolorconvert ! "
-			"nvh264enc gop-size=500 qp-min=29 qp-max=40 zerolatency=true preset=5 rc-mode=4 ! "
+			"nvh264enc qp-max=20 zerolatency=true preset=4 rc-mode=7 ! "
 			"video/x-h264,profile=baseline,stream-format=byte-stream,alignment=au ! "
 			"appsink name=alphasink "
 			"t. ! queue ! "
-			"nvh264enc gop-size=500 qp-min=29 qp-max=40 zerolatency=true preset=5 rc-mode=4 ! "
+			"nvh264enc qp-max=20 zerolatency=true preset=4 rc-mode=7 ! "
 			"video/x-h264,profile=baseline,stream-format=byte-stream,alignment=au ! "
 			"appsink name=sink",
 			NULL);

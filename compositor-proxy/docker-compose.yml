@@ -1,4 +1,3 @@
-version: '3.4'
 services:
   compositor-proxy:
     build:
@@ -12,10 +11,11 @@ services:
     ports:
       - 8081:8081
     environment:
-      GST_GL_WINDOW: gbm
+      GST_GL_PLATFORM: egl
+      GST_GL_WINDOW: egl-device
       COMPOSITOR_SESSION_ID: test123
       DEBUG: 1
-      GST_DEBUG: 3
+      GST_DEBUG: 4
       XDG_RUNTIME_DIR: /xdg-runtime-dir
       XAUTHORITY: /tmp/.X11-unix/Xauthority
   gtk3-demo:
@@ -29,32 +29,32 @@ services:
     environment:
       XDG_RUNTIME_DIR: /xdg-runtime-dir
     restart: always
-  alacritty:
-    pid: 'service:compositor-proxy'
-    build:
-      context: example-apps/alacritty
-      dockerfile: Dockerfile
-    privileged: false
-    volumes:
-      - xdg-runtime-dir:/xdg-runtime-dir
-    environment:
-      WAYLAND_DISPLAY: wayland-0
-      XDG_RUNTIME_DIR: /xdg-runtime-dir
-    restart: always
-  xterm:
-    pid: 'service:compositor-proxy'
-    build:
-      context: example-apps/xterm
-      dockerfile: Dockerfile
-    privileged: false
-    volumes:
-      - xdg-runtime-dir:/xdg-runtime-dir
-      - x11-unix:/tmp/.X11-unix
-    environment:
-      XAUTHORITY: /tmp/.X11-unix/Xauthority
-      XDG_RUNTIME_DIR: /xdg-runtime-dir
-      DISPLAY: ':1'
-    restart: always
+#  alacritty:
+#    pid: 'service:compositor-proxy'
+#    build:
+#      context: example-apps/alacritty
+#      dockerfile: Dockerfile
+#    privileged: false
+#    volumes:
+#      - xdg-runtime-dir:/xdg-runtime-dir
+#    environment:
+#      WAYLAND_DISPLAY: wayland-0
+#      XDG_RUNTIME_DIR: /xdg-runtime-dir
+#    restart: always
+#  xterm:
+#    pid: 'service:compositor-proxy'
+#    build:
+#      context: example-apps/xterm
+#      dockerfile: Dockerfile
+#    privileged: false
+#    volumes:
+#      - xdg-runtime-dir:/xdg-runtime-dir
+#      - x11-unix:/tmp/.X11-unix
+#    environment:
+#      XAUTHORITY: /tmp/.X11-unix/Xauthority
+#      XDG_RUNTIME_DIR: /xdg-runtime-dir
+#      DISPLAY: ':1'
+#    restart: always
 volumes:
   xdg-runtime-dir:
     driver_opts:

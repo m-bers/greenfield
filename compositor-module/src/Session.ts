@@ -94,10 +94,11 @@ export type RemoteClientConnection = {
 }
 
 async function h264WebCodecsSupported(): Promise<boolean> {
-  if ('VideoDecoder' in window) {
-    const videoDecoderSupport = await VideoDecoder.isConfigSupported({ codec: 'avc1.42001e' /*h264 Baseline Level 3*/ })
-    return videoDecoderSupport.supported
-  }
+  // enable once we can do color conversion in webgl
+  // if ('VideoDecoder' in window) {
+  //   const videoDecoderSupport = await VideoDecoder.isConfigSupported({ codec: 'avc1.42001e' /*h264 Baseline Level 3*/ })
+  //   return videoDecoderSupport.supported
+  // }
   return false
 }
 
