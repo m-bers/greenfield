@@ -9,8 +9,8 @@ services:
       - xdg-runtime-dir:/xdg-runtime-dir
       - x11-unix:/tmp/.X11-unix
       - ${PWD}/src/config.yaml:/app/config.yaml
-    ports:
-      - 8081:8081
+    # ports:
+    #   - 8081:8081
     environment:
       GST_GL_WINDOW: gbm
       COMPOSITOR_SESSION_ID: test123
@@ -18,6 +18,18 @@ services:
       GST_DEBUG: 3
       XDG_RUNTIME_DIR: /xdg-runtime-dir
       XAUTHORITY: /tmp/.X11-unix/Xauthority
+  compositor-module:
+    build:
+      context: ../compositor-module
+      dockerfile: Dockerfile
+    privileged: false
+    restart: always
+  nginx:
+    image: nginx
+    volumes:
+    - ../nginx/conf.d:/etc/nginx/conf.d
+    ports:
+    - "80:80"
   gtk3-demo:
     pid: 'service:compositor-proxy'
     build:

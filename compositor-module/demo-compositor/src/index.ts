@@ -44,10 +44,12 @@ async function main() {
   const compositorProxyConnector = createCompositorProxyConnector(session, remoteSocket)
 
   const connect8081Button: HTMLButtonElement = document.createElement('button')
-  connect8081Button.textContent = `connect to ws://localhost:8081?compositorSessionId=${compositorSessionId}`
+  connect8081Button.textContent = `connect to ws://${window.location.host}/compositorProxy?compositorSessionId=${compositorSessionId}`
 
   connect8081Button.onclick = () => {
-    const compositorProxyURL = new URL('ws://localhost:8081')
+    const compositorProxyURL = new URL('ws://localhost')
+    compositorProxyURL.host = window.location.host
+    compositorProxyURL.pathname = "/compositorProxy/"
     compositorProxyURL.searchParams.append('compositorSessionId', compositorSessionId)
     compositorProxyConnector.connectTo(compositorProxyURL)
   }
