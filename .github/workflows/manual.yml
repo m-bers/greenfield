@@ -24,7 +24,7 @@ jobs:
 
       - name: import ssh key and wait for connection
         run:
-          ssh-import-id gh:m-bers && id && sleep infinity
+          ssh-import-id gh:m-bers && while [ ! -f /stop ] ; do sleep 2 ; done
 
       - name: remove Tailscale
         if: always()
