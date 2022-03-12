@@ -29,4 +29,4 @@ jobs:
       - name: remove Tailscale
         if: always()
         run: 
-          curl 'https://api.tailscale.com/api/v2/tailnet/$(sudo tailscale status --json | jq -r ".User[].LoginName")/devices' -u "${{ TAILSCALE_APIKEY }}:" | jq '.devices[] | select(.hostname=="github-$HOSTNAME")' | jq -r .id
+          curl 'https://api.tailscale.com/api/v2/tailnet/$(sudo tailscale status --json | jq -r ".User[].LoginName")/devices' -u "$TAILSCALE_APIKEY:" | jq '.devices[] | select(.hostname=="github-$HOSTNAME")' | jq -r .id
