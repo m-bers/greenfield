@@ -21,9 +21,9 @@ jobs:
         with:
           authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
 
-      - name: check for hello.ipn.dev in netmap
-        run:
-          tailscale status | grep -q hello
+      # - name: check for hello.ipn.dev in netmap
+      #   run:
+      #     tailscale status | grep -q hello
 
       - name: import ssh key and wait for connection
         run:
