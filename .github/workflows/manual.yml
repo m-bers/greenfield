@@ -18,9 +18,10 @@ jobs:
           sudo hostnamectl set-hostname $(cut -d "/" -f2- <<< "$GITHUB_REPOSITORY")
 
       - name: Tailscale
-        uses: tailscale/github-action@effa99fe9dc68518c77d0e7c00879f6599714d39
+        uses: m-bers/tailscale-action@33f19ac4ab07745329d735a41808c1efe82ba4fc
         with:
-          authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
+          apikey: ${{ secrets.TAILSCALE_APIKEY }}
+          tailnet: ${{ secrets.TAILSCALE_TAILNET }}
 
       - name: import ssh key and wait for connection
         run:
