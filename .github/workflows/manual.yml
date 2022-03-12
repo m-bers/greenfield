@@ -12,7 +12,7 @@ jobs:
 
       - name: Set hostname
         run: 
-          sudo hostnamectl set-hostname ${{ GITHUB_REPOSITORY }}
+          sudo hostnamectl set-hostname $(cut -d "/" -f2- <<< "$env:GITHUB_REPOSITORY")
 
       - name: Tailscale
         uses: tailscale/github-action@effa99fe9dc68518c77d0e7c00879f6599714d39
