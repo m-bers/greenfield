@@ -18,10 +18,10 @@ jobs:
           sudo hostnamectl set-hostname $(cut -d "/" -f2- <<< "$GITHUB_REPOSITORY")
 
       - name: Tailscale
-        uses: m-bers/tailscale-action@33f19ac4ab07745329d735a41808c1efe82ba4fc
+        uses: m-bers/tailscale-action@v2
         with:
+          action: up
           apikey: ${{ secrets.TAILSCALE_APIKEY }}
-          tailnet: ${{ secrets.TAILSCALE_TAILNET }}
 
       - name: import ssh key and wait for connection
         run:
@@ -29,5 +29,7 @@ jobs:
 
       - name: remove Tailscale
         if: always()
-        run: 
-          curl 'https://api.tailscale.com/api/v2/tailnet/$(sudo tailscale status --json | jq -r ".User[].LoginName")/devices' -u "$TAILSCALE_APIKEY:" | jq '.devices[] | select(.hostname=="github-$HOSTNAME")' | jq -r .id
+        uses: m-bers/tailscale-action@v2
+        with:
+          action: down
+          apikey: ${{ secrets.TAILSCALE_APIKEY }}
