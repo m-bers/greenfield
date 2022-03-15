@@ -12,24 +12,7 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v2
-
-      - name: Set hostname
-        run: 
-          sudo hostnamectl set-hostname $(cut -d "/" -f2- <<< "$GITHUB_REPOSITORY")
-
       - name: Tailscale
-        uses: m-bers/tailscale-action@v2
+        uses: tailscale/github-action@v2
         with:
-          action: up
-          apikey: ${{ secrets.TAILSCALE_APIKEY }}
-
-      - name: import ssh key and wait for connection
-        run:
-          ssh-import-id gh:m-bers && while [ ! -f /stop ] ; do sleep 2 ; done
-
-      - name: remove Tailscale
-        if: always()
-        uses: m-bers/tailscale-action@v2
-        with:
-          action: down
-          apikey: ${{ secrets.TAILSCALE_APIKEY }}
+          authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
